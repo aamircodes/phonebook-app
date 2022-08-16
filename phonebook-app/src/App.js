@@ -11,13 +11,17 @@ const App = () => {
   const addPerson = (e) => {
     e.preventDefault()
 
-    const person = {
-      name: newName,
-      id: persons.length + 1,
+    if (persons.some((p) => p.name.toLowerCase() === newName.toLowerCase())) {
+      alert(`${newName} is already added to phonebook`)
+      setNewName('')
+    } else {
+      const person = {
+        name: newName,
+        id: persons.length + 1,
+      }
+      setPersons(persons.concat(person))
+      setNewName('')
     }
-
-    setPersons(persons.concat(person))
-    setNewName('')
   }
 
   return (
@@ -31,11 +35,9 @@ const App = () => {
           <button type='submit'>add</button>
         </div>
         <h2>Numbers</h2>
-        <ul>
-          {persons.map((p) => (
-            <li key={p.id}>{p.name}</li>
-          ))}
-        </ul>
+        {persons.map((p) => (
+          <p key={p.id}>{p.name}</p>
+        ))}
       </form>
     </div>
   )
